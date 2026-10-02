@@ -138,13 +138,36 @@ main > section[id]{ scroll-margin-top:96px; }
   margin:clamp(26px,3.6vw,40px) calc(var(--pad-x) * -1) 0;
   display:flex; justify-content:center;
 }
-/* Hela bilden ska synas utan att besökaren scrollar. Bredden tas därför ned
-   tills höjden ryms under raden och eyebrow:n — bilden är 1,894:1, så
-   höjdtaket räknas om till ett breddtak. På telefon slår taket aldrig till. */
-.hero__banner img{
-  width:100%; height:auto; display:block;
+/* Ramen är exakt lika bred som bilden, så namnet kan placeras mot motivet
+   och inte mot sektionen — bilden centreras ju med marginaler på breda skärmar.
+   Hela bilden ska rymmas utan att besökaren scrollar: höjdtaket räknas om till
+   ett breddtak eftersom bilden är 1,894:1. */
+.hero__frame{
+  position:relative; display:block; width:100%;
   max-width:calc((100vh - 190px) * 1.894);
   max-width:calc((100svh - 190px) * 1.894);
+  container-type:inline-size;
+}
+.hero__frame img{ width:100%; height:auto; display:block; }
+
+/* Namnet sätts som text på väggen bredvid Nina. Måtten är i cqw så att det
+   skalar exakt med bilden, oavsett hur bred den råkar bli. */
+.hero__name{
+  position:absolute; left:63.5%; top:50%; transform:translateY(-50%);
+  display:flex; flex-direction:column; align-items:flex-start;
+  color:#191820;
+}
+.hero__name-first{
+  font:300 clamp(30px,8.6cqw,116px)/0.9 var(--display);
+  letter-spacing:-0.015em;
+}
+.hero__name-last{
+  margin-top:clamp(6px,1.9cqw,26px);
+  padding-top:clamp(6px,1.7cqw,22px);
+  border-top:1px solid currentColor;
+  align-self:stretch;
+  font:400 clamp(10px,2.05cqw,27px) var(--ui);
+  letter-spacing:.34em; text-transform:uppercase;
 }
 
 /* Eyebrow:n bär nu tesen — den tål mer luft än etiketterna längre ned. */
