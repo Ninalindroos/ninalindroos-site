@@ -1,0 +1,19 @@
+# dependencies
+node_modules/
+
+# secrets / environment
+.env
+.env.*
+!.env.example
+
+# deploy
+.vercel
+.netlify
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+.idea/
+.vscode/

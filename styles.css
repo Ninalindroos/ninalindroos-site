@@ -1,0 +1,486 @@
+@charset "UTF-8";
+/* ==========================================================================
+   Nina Lindroos — artistsajt
+   Riktning 4a: typdriven, mörk. Newsreader (display) + Karla (gränssnitt).
+   ========================================================================== */
+
+:root{
+  --ink:        #17161a;   /* grafit, sidans botten */
+  --ink-2:      #1e1d22;   /* upphöjd yta */
+  --gold:       #d9bd86;   /* champagneguld — enda accenten */
+  --gold-dim:   rgba(217,189,134,.8);
+  --paper:      #f7f4ee;   /* varmvit text */
+  --muted:      rgba(255,255,255,.7);
+  --muted-2:    rgba(255,255,255,.55);
+  --muted-3:    rgba(255,255,255,.45);
+  --line:       rgba(255,255,255,.1);
+  --line-2:     rgba(255,255,255,.14);
+
+  --pad-x:      clamp(20px, 5vw, 64px);
+
+  --display:    "Newsreader", Georgia, "Times New Roman", serif;
+  --ui:         "Karla", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* sajten är medvetet enbart mörk — låt även formulärkontroller följa med */
+  color-scheme: dark;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ scroll-behavior:smooth; }
+@media (prefers-reduced-motion:reduce){ html{ scroll-behavior:auto; } }
+
+body{
+  margin:0;
+  background:var(--ink);
+  color:var(--paper);
+  font:400 16px/1.7 var(--ui);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+img{ max-width:100%; height:auto; display:block; }
+a{ color:inherit; text-decoration:none; }
+
+.skip{
+  position:absolute; left:-9999px; top:0; z-index:100;
+  background:var(--gold); color:var(--ink);
+  padding:10px 18px; font:500 12px var(--ui); letter-spacing:.14em;
+}
+.skip:focus{ left:8px; top:8px; }
+
+:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+
+/* ---------------------------------------------------------------- eyebrow */
+.eyebrow{
+  margin:0;
+  font:400 10.5px var(--ui);
+  letter-spacing:.13em;
+  color:var(--gold);
+  text-transform:uppercase;
+}
+
+/* ----------------------------------------------------------------- knappar */
+.btn-outline{
+  display:inline-block;
+  padding:10px 20px;
+  border:1px solid var(--gold);
+  font:500 11px var(--ui);
+  letter-spacing:.2em;
+  color:var(--gold);
+  white-space:nowrap;
+  transition:background .2s ease, color .2s ease;
+}
+.btn-outline:hover,.btn-outline:focus-visible{ background:var(--gold); color:var(--ink); }
+
+.btn-solid{
+  display:inline-block;
+  padding:14px 30px;
+  border:1px solid var(--gold);
+  background:var(--gold);
+  color:var(--ink);
+  font:600 11.5px var(--ui);
+  letter-spacing:.2em;
+  cursor:pointer;
+  transition:background .2s ease, color .2s ease;
+}
+.btn-solid:hover,.btn-solid:focus-visible{ background:transparent; color:var(--gold); }
+
+/* ================================================================ TOPBAR */
+.topbar{
+  position:sticky; top:0; z-index:20;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px clamp(20px,3vw,40px); flex-wrap:wrap;
+  padding:14px var(--pad-x);
+  background:rgba(23,22,26,.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.topbar__mark{
+  font:500 12px var(--ui); letter-spacing:.14em; color:var(--gold);
+}
+.topbar__nav{
+  display:flex; gap:clamp(16px,2.4vw,34px); flex-wrap:wrap;
+  font:400 11px var(--ui); letter-spacing:.16em; color:var(--muted-3);
+}
+.topbar__nav a{ transition:color .2s ease; }
+.topbar__nav a:hover{ color:var(--paper); }
+/* avsnittet besökaren befinner sig i */
+.topbar__nav a[aria-current="true"]{ color:var(--gold); }
+
+.topbar__lang{
+  display:flex; align-items:center; gap:5px;
+  font:400 10.5px var(--ui); letter-spacing:.1em; color:var(--muted-3);
+}
+.lang{
+  background:none; border:0; padding:2px 1px; cursor:pointer;
+  font:inherit; letter-spacing:inherit; color:var(--muted-3);
+  transition:color .2s ease;
+}
+.lang:hover{ color:var(--paper); }
+.lang[aria-pressed="true"]{ color:var(--gold); }
+
+/* ================================================================== MAIN */
+/* Ankarhopp får inte hamna under den klistrade raden. */
+main > section[id]{ scroll-margin-top:96px; }
+
+/* ================================================================== HERO */
+.hero{ padding:clamp(40px,6vw,60px) var(--pad-x) 0; }
+
+.hero__meta{
+  display:flex; justify-content:space-between; align-items:center;
+  gap:20px; flex-wrap:wrap;
+}
+
+/* Banderollen går kant i kant — den bryter ut ur hero:ns sidopadding,
+   precis som bildbandet gjorde tidigare. Bilden bär ordmärket själv. */
+.hero__banner{
+  margin:clamp(26px,3.6vw,40px) calc(var(--pad-x) * -1) 0;
+  display:flex; justify-content:center;
+}
+/* Hela bilden ska synas utan att besökaren scrollar. Bredden tas därför ned
+   tills höjden ryms under raden och eyebrow:n — bilden är 1,894:1, så
+   höjdtaket räknas om till ett breddtak. På telefon slår taket aldrig till. */
+.hero__banner img{
+  width:100%; height:auto; display:block;
+  max-width:calc((100vh - 190px) * 1.894);
+  max-width:calc((100svh - 190px) * 1.894);
+}
+
+/* Eyebrow:n bär nu tesen — den tål mer luft än etiketterna längre ned. */
+.hero__meta .eyebrow{
+  font-size:clamp(11px,1.05vw,13px);
+  letter-spacing:.18em;
+}
+
+.hero__lead{
+  margin:clamp(24px,3vw,34px) 0 0;
+  max-width:54ch;
+  font:400 clamp(15px,1.35vw,17.5px)/1.75 var(--ui);
+  color:var(--muted);
+}
+
+/* ================================================================== BAND */
+/* Omdömet ska läsas som ett eget intyg, inte som en fortsättning på hero:n —
+   därför egen yta, hårfina linjer och ett guldcitattecken som ankare. */
+.band{
+  margin-top:clamp(34px,4.5vw,56px);
+  padding:clamp(34px,4.6vw,60px) var(--pad-x);
+  background:var(--ink-2);
+  border-top:1px solid var(--line-2);
+  border-bottom:1px solid var(--line-2);
+  display:flex; flex-direction:column; gap:16px;
+}
+
+/* ---- citatet i bildbandet ----------------------------------------------- */
+.pull{
+  margin:0; max-width:50ch;
+  font:300 clamp(19px,2.3vw,30px)/1.45 var(--display);
+  color:var(--paper); text-wrap:balance;
+}
+.pull::before{
+  content:"”";
+  display:block;
+  margin-bottom:clamp(2px,.6vw,8px);
+  font:400 clamp(44px,5.4vw,76px)/.6 var(--display);
+  color:var(--gold);
+}
+.credit{
+  margin:0;
+  font:500 11px var(--ui); letter-spacing:.14em;
+  color:var(--gold); text-transform:uppercase;
+}
+
+/* ---- omdömen: ett i taget, bläddras i sidled --------------------------- */
+.tstm{ display:flex; flex-direction:column; gap:24px; }
+.tstm__track{
+  display:flex; min-width:0;
+  overflow-x:auto; overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+  scrollbar-width:none; -ms-overflow-style:none;
+  overscroll-behavior-x:contain;
+}
+.tstm__track::-webkit-scrollbar{ display:none; }
+
+.tstm__item{
+  flex:0 0 100%; min-width:0; margin:0;
+  scroll-snap-align:start;
+  display:flex; flex-direction:column; gap:16px;
+}
+.tstm__quote{
+  margin:0; max-width:62ch;
+  font:300 clamp(17px,1.9vw,24px)/1.55 var(--display);
+  color:var(--paper);
+}
+.tstm__by{
+  margin:0;
+  font:400 12.5px var(--ui); letter-spacing:.06em; color:var(--gold);
+}
+
+.tstm__nav{
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding-top:4px; border-top:1px solid var(--line);
+}
+.tstm__dots{ display:flex; gap:8px; align-items:center; }
+.tstm__dot{
+  width:7px; height:7px; padding:0; border:0; border-radius:50%;
+  background:rgba(255,255,255,.25); cursor:pointer;
+  transition:background .2s ease;
+}
+.tstm__dot:hover{ background:rgba(255,255,255,.5); }
+.tstm__dot[aria-current="true"]{ background:var(--gold); }
+
+.tstm__arrows{ display:flex; gap:5px; }
+.tstm__arrow{
+  width:34px; height:34px; padding:0;
+  border:1px solid var(--line-2); background:none;
+  color:var(--muted-2); cursor:pointer;
+  font:400 17px/1 var(--ui);
+  transition:border-color .2s ease, color .2s ease;
+}
+.tstm__arrow:hover{ border-color:var(--gold); color:var(--gold); }
+
+@media (prefers-reduced-motion:reduce){
+  .tstm__track{ scroll-behavior:auto; }
+}
+
+/* =============================================================== MARQUEE */
+.marquee{
+  overflow:hidden;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  padding:16px 0;
+  background:var(--gold);
+}
+.marquee__track{
+  display:flex; width:max-content;
+  /* Längden följer spårets bredd (~2160px) så hastigheten hålls vid ~30 px/s. */
+  animation:nlmarq 72s linear infinite;
+}
+.marquee__group{
+  display:flex; gap:44px; padding-right:44px;
+  font:500 12px var(--ui); letter-spacing:.14em;
+  color:var(--ink); white-space:nowrap;
+  text-transform:uppercase;
+}
+@keyframes nlmarq{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+@media (prefers-reduced-motion:reduce){
+  .marquee__track{ animation:none; }
+  .marquee{ overflow-x:auto; }
+}
+
+/* =============================================================== SECTION */
+.section{ padding:clamp(56px,8vw,96px) var(--pad-x); }
+
+.section__head{
+  display:flex; justify-content:space-between; align-items:baseline;
+  gap:20px; flex-wrap:wrap; margin-bottom:clamp(24px,3vw,34px);
+}
+.section__head h2{
+  margin:0;
+  font:500 15px var(--ui); letter-spacing:.18em; color:var(--paper);
+}
+.section__link,.section__links a{
+  font:400 10.5px var(--ui); letter-spacing:.13em; color:var(--gold);
+  transition:opacity .2s ease;
+}
+.section__link:hover,.section__links a:hover{ opacity:.7; }
+.section__links{ display:flex; gap:22px; flex-wrap:wrap; }
+
+/* ============================================================= TJÄNSTER */
+/* ---- tjänsteavsnittets textblock ---------------------------------------- */
+.svc__block + .svc__block{ margin-top:clamp(34px,4.6vw,58px); }
+
+/* Avsnittets rubrik är en mening, inte en etikett — därför display-snitt
+   i stället för den spärrade versalen som de andra avsnitten använder. */
+.svc__head{
+  margin:0; max-width:24ch;
+  font:300 clamp(26px,3.4vw,44px)/1.18 var(--display);
+  color:var(--paper); text-wrap:balance;
+}
+.svc__lead{
+  margin:0; max-width:26ch;
+  font:300 clamp(21px,2.5vw,31px)/1.25 var(--display);
+  color:var(--paper); text-wrap:balance;
+}
+.svc__body{
+  margin:14px 0 0; max-width:60ch;
+  font:400 clamp(14.5px,1.15vw,16px)/1.8 var(--ui); color:var(--muted);
+}
+.svc__note{
+  margin:16px 0 0; max-width:48ch;
+  font:400 clamp(14.5px,1.15vw,16px)/1.7 var(--ui); color:var(--gold);
+}
+
+/* liten etikett över ett underblock */
+.sub{
+  margin:0 0 20px; padding-bottom:12px;
+  border-bottom:1px solid var(--line);
+  font:500 10.5px var(--ui); letter-spacing:.16em;
+  color:var(--gold); text-transform:uppercase;
+}
+.sub + .svc__lead{ margin-top:0; }
+
+/* ---- vad priset består av ----------------------------------------------- */
+/* Listan är ett förtydligande, inte ett säljargument — den får ta mindre plats
+   och mindre kontrast än brödtexten omkring. */
+.price{ list-style:none; margin:16px 0 0; padding:0; max-width:64ch; }
+.price li{
+  display:grid;
+  grid-template-columns:minmax(128px,auto) minmax(0,1fr);
+  gap:2px 20px; align-items:baseline;
+  padding:9px 0; border-bottom:1px solid var(--line);
+  font:400 13px/1.6 var(--ui); color:var(--muted-3);
+}
+.price li:first-child{ border-top:1px solid var(--line); }
+.price b{ font-weight:500; color:var(--muted); }
+
+.ens{
+  list-style:none; margin:0; padding:0;
+  display:grid; gap:0 clamp(26px,3.2vw,48px);
+  grid-template-columns:repeat(2,minmax(0,1fr));   /* 2 x 2 */
+  border-bottom:1px solid var(--line-2);
+}
+.ens__item{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr);
+  gap:6px 14px; align-items:baseline;
+  padding:clamp(20px,2.4vw,28px) 0;
+  border-top:1px solid var(--line-2);
+}
+.ens__no{ font:400 11px var(--ui); color:var(--gold); }
+.ens__name{
+  margin:0;
+  font:300 clamp(22px,2.6vw,30px)/1.2 var(--display);
+  color:var(--paper);
+}
+.ens__meta{
+  grid-column:2;
+  font:400 13.5px/1.6 var(--ui); color:var(--muted-2);
+}
+
+/* ================================================================ MUSIK */
+.media{
+  list-style:none; margin:clamp(26px,3vw,36px) 0 0; padding:0;
+  display:grid; gap:clamp(22px,2.6vw,34px);
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));
+}
+.media__item{ display:flex; flex-direction:column; gap:12px; min-width:0; }
+.media__label{
+  margin:0;
+  font:500 10.5px var(--ui); letter-spacing:.16em;
+  color:var(--gold); text-transform:uppercase;
+}
+/* Platshållare tills en riktig iframe sätts in — samma yta som en 16:9-spelare. */
+.media__embed{
+  width:100%; aspect-ratio:16/9;
+  border:1px solid var(--line-2);
+  background:repeating-linear-gradient(135deg,#1e1d22 0 9px,#25242a 9px 18px);
+  display:flex; align-items:center; justify-content:center;
+  font:400 11px var(--ui); letter-spacing:.08em; color:var(--muted-3);
+}
+.media__embed iframe{ width:100%; height:100%; border:0; display:block; }
+.media__meta{
+  margin:0;
+  font:400 12.5px/1.6 var(--ui); color:var(--muted-3);
+}
+.media__more{
+  margin:clamp(26px,3vw,34px) 0 0;
+  font:400 clamp(14.5px,1.15vw,16px)/1.7 var(--ui); color:var(--muted);
+}
+
+/* ================================================================= BOKA */
+.section--book{ background:var(--ink-2); border-top:1px solid var(--line); }
+
+.book{
+  display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);
+  gap:clamp(32px,5vw,72px); align-items:start;
+}
+.book__h{
+  margin:14px 0 0;
+  font:300 clamp(30px,4vw,46px)/1.15 var(--display); color:var(--paper);
+}
+.book__lead{
+  margin:16px 0 0; max-width:38ch;
+  font:400 15.5px/1.75 var(--ui); color:var(--muted);
+}
+.book__contact{
+  list-style:none; margin:28px 0 0; padding:0;
+  display:flex; flex-direction:column; gap:8px;
+}
+.book__contact a{
+  font:400 clamp(17px,1.8vw,20px) var(--display); color:var(--gold);
+  border-bottom:1px solid transparent; transition:border-color .2s ease;
+}
+.book__contact a:hover{ border-bottom-color:var(--gold); }
+
+.book__form{
+  display:grid; grid-template-columns:1fr 1fr; gap:18px 20px;
+}
+.field{ display:flex; flex-direction:column; gap:7px; min-width:0; }
+.field--wide{ grid-column:1 / -1; }
+.field label{
+  font:500 10.5px var(--ui); letter-spacing:.14em; color:var(--gold);
+  text-transform:uppercase;
+}
+.field input,.field select,.field textarea{
+  width:100%;
+  background:transparent;
+  border:0; border-bottom:1px solid var(--line-2);
+  padding:9px 0;
+  font:400 15px var(--ui); color:var(--paper);
+  border-radius:0;
+  transition:border-color .2s ease;
+}
+.field select{ appearance:none; cursor:pointer; }
+.field select option{ background:var(--ink); color:var(--paper); }
+.field textarea{ resize:vertical; }
+.field input:focus,.field select:focus,.field textarea:focus{
+  outline:none; border-bottom-color:var(--gold);
+}
+.field input:user-invalid,.field textarea:user-invalid{ border-bottom-color:#c96a5a; }
+
+.book__note{
+  margin:14px 0 0;
+  font:400 12.5px/1.6 var(--ui); color:var(--muted-3);
+}
+
+/* ================================================================= FOOT */
+.foot{
+  padding:26px var(--pad-x);
+  border-top:1px solid var(--line);
+  display:flex; justify-content:space-between; align-items:center;
+  gap:16px; flex-wrap:wrap;
+  font:400 10.5px var(--ui); letter-spacing:.14em; color:var(--muted-3);
+}
+.foot__social{ display:flex; gap:6px; align-items:center; }
+.foot__social a{ transition:color .2s ease; }
+.foot__social a:hover{ color:var(--gold); }
+
+/* ========================================================== RESPONSIVT */
+@media (max-width:900px){
+  .book{ grid-template-columns:1fr; }
+}
+
+@media (max-width:560px){
+  .price li{ grid-template-columns:1fr; gap:2px; }
+  /* två kolumner blir för trånga för raderna "Solist och …" på telefon */
+  .ens{ grid-template-columns:1fr; }
+}
+
+@media (max-width:760px){
+
+
+  .hero{ padding-top:34px; }
+
+
+
+  .book__form{ grid-template-columns:1fr; }
+}
+
+/* ================================================================ PRINT */
+@media print{
+  .topbar,.marquee,.book__form,.skip{ display:none; }
+  body{ background:#fff; color:#000; }
+}
