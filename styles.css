@@ -168,6 +168,10 @@ main > section[id]{ scroll-margin-top:96px; }
   align-self:stretch;
   font:400 clamp(10px,2.05cqw,27px) var(--ui);
   letter-spacing:.34em; text-transform:uppercase;
+  /* Centrerat under linjen. Spärrningen lägger ett tomrum efter sista
+     bokstaven, så utan indrag hamnar texten synligt för långt åt vänster.
+     Indraget är lika stort som spärrningen. */
+  text-align:center; text-indent:.34em;
 }
 
 /* Eyebrow:n bär nu tesen — den tål mer luft än etiketterna längre ned. */
