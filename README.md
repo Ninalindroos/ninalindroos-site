@@ -119,6 +119,23 @@ check in `initialLang()`.
 Adding a fourth language means: add `data-xx` to every translatable element, add an
 entry to `LANGS`, `META` and `MAIL`, and add a button to `.topbar__lang`.
 
+## Testimonials stay in their original language
+
+Each quote is **pinned** to the language the person actually gave it in, and does not
+follow the language toggle — translating someone's words and publishing them under their
+name is a claim about what they said. The `<blockquote>` elements carry no `data-fi` /
+`data-sv` / `data-en`, just a `lang` attribute so screen readers pronounce them correctly:
+
+| Person | Quote shown in |
+|---|---|
+| Hans Rautio | Finnish |
+| Tom Gordin | Swedish |
+| Tomas Malmström | Swedish |
+| Antti Harsunen | Finnish |
+
+The **captions** (name, role, occasion) are our own words, so those still translate.
+To change a quote's language, edit the text and the `lang` attribute together.
+
 ## Design tokens
 
 Change these in `:root` in `styles.css` and the whole site follows:
