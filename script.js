@@ -164,7 +164,7 @@
     var subject = t.subject + namn + (val('datum') ? ' / ' + val('datum') : '');
 
     window.location.href =
-      'mailto:ninacharlind@gmail.com' +
+      'mailto:nina@ninalindroos.fi' +
       '?subject=' + encodeURIComponent(subject) +
       '&body=' + encodeURIComponent(body);
   });

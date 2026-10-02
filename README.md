@@ -78,7 +78,7 @@ for `data-platform` and paste the real URLs:
 
 The site is static, so the form has no server. On submit, `script.js` opens the
 visitor's mail client with every field pre-filled, addressed to
-`ninacharlind@gmail.com`. It works everywhere and costs nothing, but it does depend
+`nina@ninalindroos.fi`. It works everywhere and costs nothing, but it does depend
 on the visitor having a mail client set up.
 
 **To use a real form service instead** (recommended if you want submissions to land
