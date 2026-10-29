@@ -1,0 +1,12 @@
+# Source material — not served by the site, 11 MB of it
+Nina Hero picture 1.png
+Nina Hero picture 2.png
+Nina-Lindroos-brand-manual.pdf
+assets/*-original.jpg
+
+# Brand files kept in the repo but not used by the page
+assets/wordmark-gold.png
+assets/wordmark-original.png
+
+# Repo docs
+README.md

@@ -154,6 +154,22 @@ Fonts load from Google Fonts. To self-host, download both families and swap the
 
 ---
 
+## Vercel test environment
+
+`vercel.json` and `.vercelignore` configure this repo as a **test deployment**: no build
+step, repo root as the output directory, long cache on `/assets`, and only the ~430 KB
+the page actually needs (the source PNGs, the brand PDF and the unused wordmarks are
+excluded from the upload, though they stay in the repo).
+
+⚠️ **`vercel.json` sends `X-Robots-Tag: noindex, nofollow` on every response.** That is
+correct for a test URL — it stops Google indexing `*.vercel.app` and competing with the
+real domain. **Remove that header before ninalindroos.fi points here**, or the live site
+will be invisible to search engines.
+
+Note also that Vercel's free Hobby plan is for non-commercial use, and this is a
+commercial site — fine for testing, but production on Vercel needs a paid plan. See
+"Deploying" below for the Netlify route.
+
 ## Deploying
 
 Any static host works — Netlify, Vercel, GitHub Pages, Cloudflare Pages, or plain
