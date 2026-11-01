@@ -63,15 +63,14 @@ Wired up, from Nina's own brand document and verified where possible:
 | YouTube | `youtube.com/@NinaLindroos` — confirmed, the channel resolves by name |
 | Instagram | `instagram.com/nina_lindroos` |
 | TikTok | `tiktok.com/@lindhni` |
+| Facebook | `facebook.com/nina.lindroos1` |
 
-**Two are still missing and are marked `hidden` in the markup** so no dead link is ever
+**One is still missing and is marked `hidden` in the markup** so no dead link is ever
 shown. Add the URL and delete the `hidden` attribute to bring each back:
 
 - **Spotify** — the brand document only names the artist, not the URL. A candidate exists
   at `open.spotify.com/artist/6fSB2ETywxqSjTmRN5jZI2`, but it has 16 monthly listeners and
   none of her known releases, so it was **not** used.
-- **Facebook** — the page is called "Nina Lindroos Official"; the obvious vanity URL
-  returns 400, so the real one is needed.
 
 ### 2. Domain
 
