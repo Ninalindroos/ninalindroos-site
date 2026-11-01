@@ -376,6 +376,16 @@ main > section[id]{ scroll-margin-top:96px; }
   padding:clamp(20px,2.4vw,28px) 0;
   border-top:1px solid var(--line-2);
 }
+/* Bilden svarar på bokarens egentliga fråga — hur ser det ut hos oss? */
+.ens__photo{
+  grid-column:1 / -1;
+  margin:0 0 clamp(12px,1.4vw,18px);
+}
+.ens__photo img{
+  width:100%; height:auto; display:block;
+  aspect-ratio:1; object-fit:cover;
+  filter:grayscale(.18) contrast(1.02);
+}
 .ens__no{ font:400 11px var(--ui); color:var(--gold); }
 .ens__name{
   margin:0;

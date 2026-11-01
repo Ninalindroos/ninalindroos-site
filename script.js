@@ -87,6 +87,11 @@
       arias[k].setAttribute('aria-label', arias[k].getAttribute('data-' + lang + '-aria'));
     }
 
+    var alts = document.querySelectorAll('[data-' + lang + '-alt]');
+    for (var a = 0; a < alts.length; a++) {
+      alts[a].setAttribute('alt', alts[a].getAttribute('data-' + lang + '-alt'));
+    }
+
     document.documentElement.lang = lang;   // fi | sv | en
     document.title = META[lang].title;
 
