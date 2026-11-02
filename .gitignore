@@ -17,3 +17,8 @@ desktop.ini
 *.swp
 .idea/
 .vscode/
+
+# Source material kept outside the repo — the repo is public.
+# Masters live in OneDrive/Totte/Concultancy/Customers/Nina/Hemsida/Repo source files
+*.pdf
+Nina Hero picture*.png
