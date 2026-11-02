@@ -127,18 +127,24 @@ entry to `LANGS`, `META` and `MAIL`, and add a button to `.topbar__lang`.
 
 Each quote is **pinned** to the language the person actually gave it in, and does not
 follow the language toggle — translating someone's words and publishing them under their
-name is a claim about what they said. The `<blockquote>` elements carry no `data-fi` /
+name is a claim about what they said. Those `<blockquote>` elements carry no `data-fi` /
 `data-sv` / `data-en`, just a `lang` attribute so screen readers pronounce them correctly:
 
 | Person | Quote shown in |
 |---|---|
-| Hans Rautio | Finnish |
-| Tom Gordin | Swedish |
-| Tomas Malmström | Swedish |
-| Antti Harsunen | Finnish |
+| Antti Harsunen, GraniAID | Finnish |
+| Tom Gordin, Helsinki Horse Show | Swedish |
+| Tomas Malmström, Klobben | Swedish |
+| Karin Nylund, Ekenäs Sparbank | Swedish |
 
 The **captions** (name, role, occasion) are our own words, so those still translate.
 To change a quote's language, edit the text and the `lang` attribute together.
+
+**The one exception is Hans Rautio's pull quote** in the band strip under the hero. It
+*does* follow the toggle, because Nina supplied all three wordings herself — so the
+Swedish and English are his approved texts, not our translation of his Finnish. If that
+quote is ever reworded, all three `data-*` attributes have to be changed together, and
+the new wording has to come from him or from Nina, not from us.
 
 ## Design tokens
 
