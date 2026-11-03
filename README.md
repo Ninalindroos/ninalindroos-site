@@ -38,21 +38,38 @@ or remove a `.tstm__item` **and** the matching number of `.tstm__dot` buttons �
 script reads both from the DOM, so nothing else needs touching.
 
 
-### 0b. The five media embeds
+### 0b. The media embeds — done
 
-"Lyssna och se" holds five 16:9 **placeholders** — one per line-up plus konferencierskap.
-Replace each `<div class="media__embed">…</div>` with a real player and fill in the
-caption below it:
+"Kuuntele ja katso" now holds the real players, from Nina's own list:
 
-```html
-<div class="media__embed">
-  <iframe src="https://open.spotify.com/embed/track/YOUR-ID" loading="lazy"
-          title="Partyband" allow="encrypted-media"></iframe>
-</div>
-```
+| Slot | Player | Source |
+|---|---|---|
+| Soolo | YouTube, 16:9, own row | Händerna mot himlen, *Ääni ratkaisee*, The Voice of Finland 2026 |
+| Jazzbändi | Spotify, 352 px | Min evighet, EP *Jag andas in*, 2025 |
+| Vieraileva artisti | Spotify, 352 px | L.O.V.E, Acoustic Dixie Six feat. Nina Lindroos, 2023 |
 
-`.media__embed iframe` is already styled to fill the box, so nothing else is needed.
-The captions (`.media__meta`) are placeholders too — `[låt · tillfälle · plats · år]`.
+Below, **Muita ääninäytteitä** holds four more Spotify tracks in the compact
+152 px player: *Antaa olla* (2021), *Hunajainen – A Taste of Honey* (Riki Sorsa
+& Nina Lindroos, 2013), *Den våren* (2021) and *On the Street Where You Live*
+(Grani Big Band, live, Åke's Jazz Festival).
+
+Three things to know before editing them:
+
+- **Heights are per type, not a shared ratio.** Spotify only draws the cover art
+  at `352px`; below that the card collapses to a thin row with no image. The
+  compact player is `152px`. YouTube is `16:9`. The classes are
+  `.media__embed--track`, `--mini` and `--video`.
+- **`&theme=0` on every Spotify URL.** Without it Spotify tints the whole card
+  from the cover art, which put magenta and orange blocks next to the gold.
+  With it the card is neutral dark and the artwork reads *better*, not worse.
+- **Partybändi and Duo have no player** — the duo recording could not go up on
+  YouTube for rights reasons. Nina's act names for them (`Nina & The Party Band`,
+  `Nina & Nygge`) sit on the line-up cards instead, as `.ens__act`, since those
+  cards already carry the photos.
+
+All seven iframes are `loading="lazy"`, so they cost nothing until scrolled to.
+They are third-party frames that set cookies — if a consent banner is ever added,
+these are what it has to gate.
 
 ### 1. Social and streaming links
 
