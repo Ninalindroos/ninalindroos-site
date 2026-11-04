@@ -129,27 +129,30 @@ a{ color:inherit; text-decoration:none; }
 main > section[id]{ scroll-margin-top:calc(var(--bar-h) + 24px); }
 
 /* ================================================================== HERO */
-.hero{ padding:clamp(40px,6vw,60px) var(--pad-x) 0; }
+/* Bilden ligger först och ska nå nära raden, så toppen är smal här. */
+.hero{ padding:clamp(14px,1.6vw,22px) var(--pad-x) 0; }
 
 .hero__meta{
+  margin-top:clamp(18px,2.2vw,28px);
   display:flex; justify-content:space-between; align-items:center;
   gap:20px; flex-wrap:wrap;
 }
 
-/* Banderollen går kant i kant — den bryter ut ur hero:ns sidopadding,
-   precis som bildbandet gjorde tidigare. Bilden bär ordmärket själv. */
-.hero__banner{
-  margin:clamp(26px,3.6vw,40px) calc(var(--pad-x) * -1) 0;
-  display:flex; justify-content:center;
-}
+/* Banderollen följer textpelaren. Förut bröt den ut ur sidopaddingen och
+   centrerades, medan bredden styrdes av fönstrets HÖJD — två olika system,
+   så bild och text kunde aldrig få samma vänsterkant. Vid 1920x830 låg de
+   106 px isär och bilden flöt mitt i ett mörkt fält. Nu är den helt enkelt
+   lika bred som texten. */
+.hero__banner{ margin:0; display:block; }
 /* Ramen är exakt lika bred som bilden, så namnet kan placeras mot motivet
    och inte mot sektionen — bilden centreras ju med marginaler på breda skärmar.
    Hela bilden ska rymmas utan att besökaren scrollar: höjdtaket räknas om till
    ett breddtak eftersom bilden är 1,894:1. */
 .hero__frame{
   position:relative; display:block; width:100%;
-  max-width:min(calc((100vh - 190px) * 1.894), 2000px);
-  max-width:min(calc((100svh - 190px) * 1.894), 2000px);
+  /* Textpelaren är redan kapad till --maxw, så bilden kan aldrig bli
+     bredare än 1440 px och skalas därmed aldrig upp från sina 2000. */
+  max-width:100%;
   container-type:inline-size;
 }
 .hero__frame img{ width:100%; height:auto; display:block; }

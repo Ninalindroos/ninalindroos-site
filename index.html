@@ -8,6 +8,9 @@
 <meta name="theme-color" content="#17161a">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="canonical" href="https://www.ninalindroos.fi/">
+<link rel="preload" as="image" fetchpriority="high"
+      imagesrcset="assets/hero-banner-1440.webp 1440w, assets/hero-banner-2880.webp 2880w"
+      imagesizes="(min-width:1568px) 1440px, (min-width:1280px) calc(100vw - 128px), 90vw" href="assets/hero-banner-1440.webp">
 
 <meta property="og:type" content="profile">
 <meta property="og:title" content="Nina Lindroos — Laulaja ja juontaja">
@@ -71,16 +74,16 @@
 
   <!-- ============ HERO ============ -->
   <section class="hero">
-    <div class="hero__meta">
-      <p class="eyebrow" data-sv="Röst · Närvaro · Stämning" data-en="Voice · Presence · Atmosphere" data-fi="Ääni · Läsnäolo · Tunnelma">Ääni · Läsnäolo · Tunnelma</p>
-      <a class="btn-outline" href="#boka" data-sv="BOKA 2026" data-en="BOOK 2026" data-fi="VARAA 2026">VARAA 2026</a>
-    </div>
-
     <h1 class="hero__banner">
       <span class="hero__frame">
         <picture>
-          <source srcset="assets/hero-banner.webp" type="image/webp">
-          <img src="assets/hero-banner.jpg" width="2000" height="1056" alt="">
+          <source type="image/webp"
+                  srcset="assets/hero-banner-1440.webp 1440w, assets/hero-banner-2880.webp 2880w"
+                  sizes="(min-width:1568px) 1440px, (min-width:1280px) calc(100vw - 128px), 90vw">
+          <img src="assets/hero-banner-1440.jpg"
+               srcset="assets/hero-banner-1440.jpg 1440w, assets/hero-banner-2880.jpg 2880w"
+               sizes="(min-width:1568px) 1440px, (min-width:1280px) calc(100vw - 128px), 90vw"
+               width="2880" height="1520" fetchpriority="high" decoding="async" alt="">
         </picture>
         <span class="hero__name">
           <span class="hero__name-first">Nina</span>
@@ -88,6 +91,12 @@
         </span>
       </span>
     </h1>
+
+    <div class="hero__meta">
+      <p class="eyebrow" data-sv="Röst · Närvaro · Stämning" data-en="Voice · Presence · Atmosphere" data-fi="Ääni · Läsnäolo · Tunnelma">Ääni · Läsnäolo · Tunnelma</p>
+      <a class="btn-outline" href="#boka" data-sv="BOKA 2026" data-en="BOOK 2026" data-fi="VARAA 2026">VARAA 2026</a>
+    </div>
+
 
     <p class="hero__lead"
        data-sv="Jag uppträder som sångerska och konferencier på fester, företagsevenemang och tillställningar. Du kan boka mig som sångerska, som konferencier eller i båda rollerna. Varje tillfälle är unikt, och därför planerar jag mitt framträdande efter tillfällets karaktär, stämningen och dina önskemål." data-en="I perform as a singer and host at parties, corporate events and celebrations. You can book me as a singer, as a host, or in both roles. Every occasion is different, so I shape each performance around its character, the atmosphere and your wishes."
@@ -137,8 +146,12 @@
       <li class="ens__item">
         <figure class="ens__photo">
           <picture>
-            <source srcset="assets/lineup-partyband.webp" type="image/webp">
-            <img src="assets/lineup-partyband.jpg" width="900" height="900" loading="lazy"
+            <source type="image/webp" srcset="assets/lineup-partyband-700.webp 700w, assets/lineup-partyband.webp 900w"
+                    sizes="(max-width:560px) 90vw, (min-width:1568px) 640px, 45vw">
+            <img src="assets/lineup-partyband-700.jpg"
+                 srcset="assets/lineup-partyband-700.jpg 700w, assets/lineup-partyband.jpg 900w"
+                 sizes="(max-width:560px) 90vw, (min-width:1568px) 640px, 45vw"
+                 width="900" height="900" loading="lazy" decoding="async"
                  alt="Partybändi kullanvärisissä puvuissa" data-fi-alt="Partybändi kullanvärisissä puvuissa" data-sv-alt="Partybandet i guldkostymer" data-en-alt="The party band in gold suits">
           </picture>
         </figure>
@@ -153,8 +166,12 @@
       <li class="ens__item">
         <figure class="ens__photo">
           <picture>
-            <source srcset="assets/lineup-jazzband.webp" type="image/webp">
-            <img src="assets/lineup-jazzband.jpg" width="900" height="900" loading="lazy"
+            <source type="image/webp" srcset="assets/lineup-jazzband-700.webp 700w, assets/lineup-jazzband-1400.webp 1400w"
+                    sizes="(max-width:560px) 90vw, (min-width:1568px) 640px, 45vw">
+            <img src="assets/lineup-jazzband-700.jpg"
+                 srcset="assets/lineup-jazzband-700.jpg 700w, assets/lineup-jazzband-1400.jpg 1400w"
+                 sizes="(max-width:560px) 90vw, (min-width:1568px) 640px, 45vw"
+                 width="1400" height="1400" loading="lazy" decoding="async"
                  alt="Nina Lindroos lavalla jazzkokoonpanon kanssa" data-fi-alt="Nina Lindroos lavalla jazzkokoonpanon kanssa" data-sv-alt="Nina Lindroos på scen med jazzsättningen" data-en-alt="Nina Lindroos on stage with the jazz line-up">
           </picture>
           <figcaption class="ens__credit" data-fi="Kuva: Thomas Törnqvist" data-sv="Foto: Thomas Törnqvist" data-en="Photo: Thomas Törnqvist">Kuva: Thomas Törnqvist</figcaption>
@@ -169,8 +186,12 @@
       <li class="ens__item">
         <figure class="ens__photo">
           <picture>
-            <source srcset="assets/lineup-duo.webp" type="image/webp">
-            <img src="assets/lineup-duo.jpg" width="900" height="900" loading="lazy"
+            <source type="image/webp" srcset="assets/lineup-duo-700.webp 700w, assets/lineup-duo-1400.webp 1400w"
+                    sizes="(max-width:560px) 90vw, (min-width:1568px) 640px, 45vw">
+            <img src="assets/lineup-duo-700.jpg"
+                 srcset="assets/lineup-duo-700.jpg 700w, assets/lineup-duo-1400.jpg 1400w"
+                 sizes="(max-width:560px) 90vw, (min-width:1568px) 640px, 45vw"
+                 width="1400" height="1400" loading="lazy" decoding="async"
                  alt="Duo kitaran kanssa" data-fi-alt="Duo kitaran kanssa" data-sv-alt="Duon med gitarr" data-en-alt="The duo with guitar">
           </picture>
         </figure>
@@ -185,8 +206,12 @@
       <li class="ens__item">
         <figure class="ens__photo">
           <picture>
-            <source srcset="assets/lineup-solo.webp" type="image/webp">
-            <img src="assets/lineup-solo.jpg" width="900" height="900" loading="lazy"
+            <source type="image/webp" srcset="assets/lineup-solo-700.webp 700w, assets/lineup-solo.webp 900w"
+                    sizes="(max-width:560px) 90vw, (min-width:1568px) 640px, 45vw">
+            <img src="assets/lineup-solo-700.jpg"
+                 srcset="assets/lineup-solo-700.jpg 700w, assets/lineup-solo.jpg 900w"
+                 sizes="(max-width:560px) 90vw, (min-width:1568px) 640px, 45vw"
+                 width="900" height="900" loading="lazy" decoding="async"
                  alt="Nina Lindroos solistina" data-fi-alt="Nina Lindroos solistina" data-sv-alt="Nina Lindroos som solist" data-en-alt="Nina Lindroos performing solo">
           </picture>
         </figure>
@@ -200,8 +225,12 @@
       <li class="ens__item">
         <figure class="ens__photo">
           <picture>
-            <source srcset="assets/lineup-guest.webp" type="image/webp">
-            <img src="assets/lineup-guest.jpg" width="900" height="900" loading="lazy"
+            <source type="image/webp" srcset="assets/lineup-guest-700.webp 700w, assets/lineup-guest-1400.webp 1400w"
+                    sizes="(max-width:560px) 90vw, (min-width:1568px) 640px, 45vw">
+            <img src="assets/lineup-guest-700.jpg"
+                 srcset="assets/lineup-guest-700.jpg 700w, assets/lineup-guest-1400.jpg 1400w"
+                 sizes="(max-width:560px) 90vw, (min-width:1568px) 640px, 45vw"
+                 width="1400" height="1400" loading="lazy" decoding="async"
                  alt="Nina Lindroos punaisessa mekossa" data-fi-alt="Nina Lindroos punaisessa mekossa" data-sv-alt="Nina Lindroos i röd klänning" data-en-alt="Nina Lindroos in a red dress">
           </picture>
         </figure>

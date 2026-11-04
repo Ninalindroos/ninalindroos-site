@@ -224,3 +224,52 @@ Then open `http://localhost:8000`.
   written from the format notes only (`duo · 2 mus.`, guest artist). Worth a read-through
   by Nina.
 - Stats (`20+`, `6`, `2`, `15`) are taken from the canvas — check they are still current.
+
+---
+
+## Images — one file per screen, not one file for all screens
+
+Every photo ships at two widths and the browser picks. Before this, each was a
+single file: 900px shown at 625px, which is 0.72x on a 2x screen — soft on most
+phones and laptops — while wasting bytes on a 1x one. A 1x visitor now downloads
+**441 KB instead of 739 KB**, and a 2x visitor gets a genuinely sharp image.
+
+| Image | Widths | Source |
+|---|---|---|
+| hero | 1440, 2880 | `Nina Hero picture 2.png`, 2880x1520 |
+| jazzband, duo, guest | 700, 1400 | masters in OneDrive (see below) |
+| partyband, solo | 700, 900 | **no master found — 900px is the ceiling** |
+
+The hero also carries `fetchpriority="high"` and a `<link rel="preload">`,
+because it is the LCP element and was otherwise not discovered until the parser
+reached it.
+
+### Two traps if you regenerate these
+
+**The hero master has Nina's script logo in the bottom right.** It was painted
+out once, and regenerating from the raw master puts it back — it lands directly
+on top of the `LINDROOS` lettering. The paint-out is a patch over roughly
+x 2225-2755, y 780-1380 in the 2880px master, lifted from the previously
+published image. Check that corner on any new hero.
+
+**There are two hero PNGs and only `picture 2` is the right one.** `picture 1`
+is a different frame entirely. Compare against the published image before
+trusting either.
+
+### Masters
+
+```
+OneDrive/Totte/Concultancy/Customers/Nina/Hemsida/
+  AD6_Nina_Nya_Paviljongen_2019_photo_Thomas_Törnkvist.jpg   -> jazzband
+  20230310_095730.jpg                                        -> duo
+  IMG-20251129-WA0007.jpg                                    -> guest
+  Repo source files/Nina Hero picture 2.png                  -> hero
+```
+
+`partyband` and `solo` were not matched to anything in that folder. If their
+originals turn up, regenerate them at 1400w the same way and add the candidate
+to the `srcset`; nothing else needs touching.
+
+Crops were recovered by scanning each master for the square crop that best
+matched the published file — all three landed within 1.0-2.2 mean pixel
+difference, so the framing is unchanged.
