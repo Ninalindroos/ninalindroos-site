@@ -188,9 +188,28 @@
   if (!track) return;
 
   var items = Array.prototype.slice.call(track.children);
-  var dots = Array.prototype.slice.call(document.querySelectorAll('.tstm__dot'));
   var arrows = Array.prototype.slice.call(document.querySelectorAll('.tstm__arrow'));
   if (!items.length) return;
+
+  /* Prickarna stod förr i markupen och måste hållas i synk med antalet
+     omdömen för hand. Nu byggs de här, så ett nytt omdöme räcker i sig.
+     Etiketterna får data-*-aria med, så språkväxlingen hittar dem sedan. */
+  var DOT = { fi: 'Suositus ', sv: 'Omdöme ', en: 'Testimonial ' };
+  var wrap = document.querySelector('.tstm__dots');
+  var dots = [];
+  if (wrap) {
+    var lang = document.documentElement.lang || 'fi';
+    for (var d0 = 0; d0 < items.length; d0++) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'tstm__dot';
+      b.setAttribute('aria-current', d0 === 0 ? 'true' : 'false');
+      for (var l in DOT) { b.setAttribute('data-' + l + '-aria', DOT[l] + (d0 + 1)); }
+      b.setAttribute('aria-label', (DOT[lang] || DOT.fi) + (d0 + 1));
+      wrap.appendChild(b);
+      dots.push(b);
+    }
+  }
 
   function current() {
     var w = track.clientWidth || 1;
@@ -284,4 +303,69 @@
   window.addEventListener('scroll', spy, { passive: true });
   window.addEventListener('resize', spy);
   spy();
+})();
+
+/* ==========================================================================
+   Radens verkliga höjd ut i CSS, för ankarhoppen.
+   Höjden är inte en konstant: 45 px på desktop, 125 px vid 320 px där
+   navigationen radbryts, och den ändras även av språkbytet när etiketterna
+   blir längre. Förut stod 96 px hårdkodat och rubriken hamnade 29 px under
+   raden på en liten telefon.
+   ========================================================================== */
+(function () {
+  'use strict';
+
+  var bar = document.querySelector('.topbar');
+  if (!bar) return;
+
+  var last = -1;
+  function set() {
+    var h = bar.offsetHeight;
+    // Skriv bara när höjden faktiskt ändrats. Skriver man vid varje besked
+    // invalideras hela dokumentets stil, webbläsaren läser det som en
+    // ResizeObserver-loop och håller inne nästa besked — höjden blev då
+    // kvar på ett gammalt värde efter ett snabbt storleksbyte.
+    if (h === last) return;
+    last = h;
+    document.documentElement.style.setProperty('--bar-h', h + 'px');
+  }
+  set();
+
+  // Båda behövs: observern fångar radbrytningen vid språkbyte, resize
+  // fångar de fall där observerns besked uteblir.
+  if (window.ResizeObserver) new window.ResizeObserver(set).observe(bar);
+  window.addEventListener('resize', set);
+  window.addEventListener('orientationchange', set);
+
+  // Webbtypsnitten byter höjd på raden när de växlas in.
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(set);
+})();
+
+/* ==========================================================================
+   Marquee-hastigheten räknas ut i stället för att skrivas in.
+   Längden stod som en konstant i CSS och måste räknas om för hand varje gång
+   listan ändrades — den hann glida två gånger innan detta. Spåret rymmer två
+   identiska grupper och animationen flyttar det -50 %, alltså exakt en grupp.
+   ========================================================================== */
+(function () {
+  'use strict';
+
+  var SPEED = 30;                       // px/s
+  var track = document.querySelector('.marquee__track');
+  var group = track && track.firstElementChild;
+  if (!group) return;
+
+  function tune() {
+    var w = group.getBoundingClientRect().width;
+    if (w > 0) track.style.animationDuration = (w / SPEED).toFixed(1) + 's';
+  }
+  tune();
+
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(tune);
+
+  var timer;
+  window.addEventListener('resize', function () {
+    window.clearTimeout(timer);
+    timer = window.setTimeout(tune, 200);
+  });
 })();

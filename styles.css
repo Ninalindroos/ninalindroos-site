@@ -16,7 +16,9 @@
   --line:       rgba(255,255,255,.1);
   --line-2:     rgba(255,255,255,.14);
 
-  --pad-x:      clamp(20px, 5vw, 64px);
+  --maxw:       1440px;  /* innehållets tak — bakgrunder går fortfarande kant i kant */
+  --pad-x:      max(clamp(20px, 5vw, 64px), calc((100vw - var(--maxw)) / 2));
+  --bar-h:      56px;    /* sätts om av JS till radens verkliga höjd */
 
   --display:    "Newsreader", Georgia, "Times New Roman", serif;
   --ui:         "Karla", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -121,8 +123,10 @@ a{ color:inherit; text-decoration:none; }
 .lang[aria-pressed="true"]{ color:var(--gold); }
 
 /* ================================================================== MAIN */
-/* Ankarhopp får inte hamna under den klistrade raden. */
-main > section[id]{ scroll-margin-top:96px; }
+/* Ankarhopp får inte hamna under den klistrade raden. Höjden varierar —
+   45 px på desktop, 125 px vid 320 px där navigationen radbryts — så den
+   mäts i JS och skrivs till --bar-h. Värdet ovan gäller utan JS. */
+main > section[id]{ scroll-margin-top:calc(var(--bar-h) + 24px); }
 
 /* ================================================================== HERO */
 .hero{ padding:clamp(40px,6vw,60px) var(--pad-x) 0; }
@@ -144,8 +148,8 @@ main > section[id]{ scroll-margin-top:96px; }
    ett breddtak eftersom bilden är 1,894:1. */
 .hero__frame{
   position:relative; display:block; width:100%;
-  max-width:calc((100vh - 190px) * 1.894);
-  max-width:calc((100svh - 190px) * 1.894);
+  max-width:min(calc((100vh - 190px) * 1.894), 2000px);
+  max-width:min(calc((100svh - 190px) * 1.894), 2000px);
   container-type:inline-size;
 }
 .hero__frame img{ width:100%; height:auto; display:block; }
